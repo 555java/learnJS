@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function runOnKeys(func, ...args) {
+        let pushedButtons = [];
+
+        document.addEventListener("keydown", function (event) {
+          pushedButtons.push(event.code);
+          for (argKeys of args) {
+            if (!pushedButtons.includes(argKeys)) {
+              return;
+            }
+          }
+          func();
+          pushedButtons = [];
+        });
+
+        document.addEventListener("keyup", function (event) {
+          pushedButtons = pushedButtons.filter((elem) => elem !== event.code);
+        });
+      }
+
+      runOnKeys(() => alert("Привет!"), "KeyQ", "KeyW");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 4px;
+      }
+      th {
+        cursor: pointer;
+      }
+      th:hover {
+        background: yellow;
+      }
+    </style>
+  </head>
+
+  <body>
+    <table id="grid">
+      <thead>
+        <tr>
+          <th data-type="number">Возраст</th>
+          <th data-type="string">Имя</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>5</td>
+          <td>Вася</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Петя</td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td>Женя</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>Маша</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Илья</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script>
+      class DataTable {
+        constructor(elem) {
+          this._elem = elem;
+          elem.onclick = this.onClick.bind(this);
+          console.log(this);
+        }
+
+        getRows() {
+          let rows = Array.from(this._elem.querySelectorAll("tbody tr"));
+          rows = rows.map((elem) => {
+            let tds = Array.from(elem.querySelectorAll("td"));
+            tds = tds.map((td) => td.textContent);
+            return tds;
+          });
+          return rows;
+        }
+
+        renderTable(arr) {
+          let newTableBody = "";
+          arr.forEach((element) => {
+            newTableBody += "<tr>";
+            element.forEach((el) => {
+              newTableBody += "<td>" + el + "</td>";
+            });
+            newTableBody += "</tr>";
+          });
+          this._elem.children[1].innerHTML = newTableBody;
+        }
+
+        stringSorted() {
+          let rows = this.getRows();
+          let sortedArr = rows.sort((a, b) => {
+            const nameA = a[1].toUpperCase(); // ignore upper and lowercase
+            const nameB = b[1].toUpperCase(); // ignore upper and lowercase
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            return 0;
+          });
+          this.renderTable(sortedArr);
+        }
+
+        numberSorted() {
+          let rows = this.getRows();
+          let sortedArr = rows.sort((a, b) => a[0] - b[0]);
+          this.renderTable(sortedArr);
+        }
+        onClick(event) {
+          let action = event.target.dataset.type + "Sorted";
+          console.log(action);
+          if (action) {
+            this[action]();
+          }
+        }
+      }
+
+      new DataTable(document.getElementById("grid"));
+    </script>
+  </body>
+</html>

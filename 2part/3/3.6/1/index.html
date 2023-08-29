@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      .infinite-div {
+        background-color: aquamarine;
+        padding: 10px;
+        margin: 10px;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Прокрути меня</h1>
+    <div id="scrollBody"></div>
+    <script>
+      let scrollBody = document.getElementById("scrollBody");
+      function checkDivs() {
+        let scrollHeight = Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight,
+          document.body.offsetHeight,
+          document.documentElement.offsetHeight,
+          document.body.clientHeight,
+          document.documentElement.clientHeight
+        );
+        if (scrollBody.childElementCount === 0) {
+          addDiv();
+          console.log("no elements");
+        }
+        if (
+          scrollHeight -
+            window.pageYOffset -
+            document.documentElement.clientHeight <
+          100
+        ) {
+          addDiv();
+        }
+        if (
+          scrollHeight -
+            window.pageYOffset -
+            document.documentElement.clientHeight >
+          200
+        ) {
+          scrollBody.lastChild.remove();
+        }
+        return;
+      }
+      function addDiv() {
+        let element = document.createElement("div");
+        element.classList.add("infinite-div");
+        element.innerHTML = new Date();
+        scrollBody.append(element);
+        checkDivs();
+      }
+      addDiv();
+      document.addEventListener("scroll", checkDivs);
+    </script>
+  </body>
+</html>

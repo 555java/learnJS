@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      #contents {
+        padding: 5px;
+        border: 1px green solid;
+      }
+    </style>
+  </head>
+
+  <body>
+    <fieldset id="contents">
+      <legend>#contents</legend>
+      <p>
+        Как насчёт того, чтобы прочитать
+        <a href="https://wikipedia.org">Википедию</a> или посетить
+        <a href="https://w3.org"><i>W3.org</i></a> и узнать о современных
+        стандартах?
+      </p>
+    </fieldset>
+    <script>
+      let contents = document.getElementById("contents");
+      console.log(contents);
+
+      contents.addEventListener("click", function (event) {
+        let a = event.target.closest("a");
+        if (!a) return;
+        if (!confirm("Do you want to go to the website?")) {
+          event.preventDefault();
+        }
+      });
+    </script>
+  </body>
+</html>

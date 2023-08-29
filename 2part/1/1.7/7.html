@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+
+      td,
+      th {
+        border: 1px solid black;
+        padding: 3px;
+        text-align: center;
+      }
+
+      th {
+        font-weight: bold;
+        background-color: #e6e6e6;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="calendar"></div>
+
+    <script>
+      function createCalendar(elem, year, month) {
+        let table = document.createElement("table");
+        let days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+        let thead = table.createTHead();
+        let theadRow = thead.insertRow();
+
+        days.forEach((element, index) => {
+          let th = document.createElement("th");
+          th.append(element);
+          theadRow.append(th);
+        });
+
+        let date = new Date(year, month - 1, 1);
+        let startDay = date.getDay();
+        if (startDay == 0) startDay = 7;
+
+        let monthLenght = new Date(year, month, 0).getDate();
+        let monthArr = [];
+        let week = 1;
+        let weekDayNum = startDay;
+        let weeknum = 0;
+
+        for (let day = 1; day <= monthLenght; day++) {
+          monthArr.push([day, weekDayNum, week]);
+          weekNum = week;
+          if (weekDayNum === 7) {
+            weekDayNum = 1;
+            week++;
+          } else {
+            weekDayNum++;
+          }
+        }
+
+        console.log(monthArr);
+        console.log(weekNum);
+        for (let week = 1; week <= weekNum; week++) {
+          let row = table.insertRow();
+          for (let day = 1; day <= 7; day++) {
+            let cell = row.insertCell();
+          }
+        }
+
+        monthArr.forEach((elem) => {
+          console.log(elem);
+          console.log(table.rows[elem[2]]);
+          table.rows[elem[2]].cells[elem[1] - 1].innerHTML = elem[0];
+        });
+        calendar.append(table);
+      }
+
+      createCalendar(calendar, 2023, 12);
+    </script>
+  </body>
+</html>

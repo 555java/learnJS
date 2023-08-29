@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      async function loadJson(url) {
+        try {
+          let response = await fetch(url);
+          if (response.status == 200) {
+            let json = await response.json();
+            return json;
+          } else {
+            throw new Error(response.status);
+          }
+        } catch (error) {
+          alert(error);
+        }
+      }
+
+      loadJson("https://learn.javascript.ru/async-await#tasks");
+    </script>
+  </body>
+</html>

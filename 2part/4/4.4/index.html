@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <h1>Press button</h1>
+    <button id="show-form">Show form</button>
+    <div id="prompt-form-container">
+      <form id="prompt-form">
+        <div id="prompt-message"></div>
+        <input name="text" type="text" />
+        <input type="submit" value="Ok" />
+        <input type="button" name="cancel" value="Отмена" />
+      </form>
+    </div>
+  </body>
+  <script>
+    let showFormButton = document.getElementById("show-form");
+    let form = document.getElementById("prompt-form");
+
+    function showPrompt(HTML, func) {
+      let formContainer = document.getElementById("prompt-form-container");
+      let message = document.getElementById("prompt-message");
+      message.innerHTML = HTML;
+      formContainer.style.visibility = "visible";
+      form.text.focus();
+
+      form.onsubmit = function (event) {
+        event.preventDefault();
+        if (!form.text.value) return;
+        func(form.text.value);
+        form.text.value = "";
+        formContainer.style.visibility = "hidden";
+      };
+
+      form.cancel.addEventListener("click", () => {
+        formContainer.style.visibility = "hidden";
+        form.text.value = "";
+      });
+    }
+
+    showFormButton.addEventListener("click", () => {
+      showPrompt("Введите что-нибудь<br>...умное :)", function (value) {
+        alert(value);
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      console.log(event.target);
+    });
+  </script>
+</html>

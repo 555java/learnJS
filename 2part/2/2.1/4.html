@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      #field {
+        width: 200px;
+        height: 150px;
+        border: 10px solid black;
+        background-color: #00ff00;
+        overflow: hidden;
+      }
+      #ball {
+        position: absolute;
+
+        transition: top 1s, left 1s;
+      }
+    </style>
+  </head>
+
+  <body style="height: 2000px">
+    Нажмите на поле для перемещения мяча.
+    <br />
+    Мяч не должен выходить за границы поля.
+
+    <div id="field">
+      <img src="https://ru.js.cx/clipart/ball.svg" id="ball" /> . . . . . . . .
+      . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+      . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+      . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+      . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+      . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+      . . . . . . . . . . . .
+    </div>
+
+    <script>
+      function moveBall(event) {
+        const destCoord = {
+          x: event.clientX + window.pageXOffset,
+          y: event.clientY + window.pageYOffset,
+        };
+        const ballSize = ball.clientWidth;
+        let fieldCoords = {
+          minX:
+            field.getBoundingClientRect().left +
+            field.clientLeft +
+            window.pageXOffset +
+            ballSize / 2,
+          maxX:
+            field.getBoundingClientRect().left +
+            field.clientLeft +
+            window.pageXOffset +
+            field.clientWidth -
+            ballSize / 2,
+          minY:
+            field.getBoundingClientRect().top +
+            field.clientTop +
+            window.pageYOffset +
+            ballSize / 2,
+          maxY:
+            field.getBoundingClientRect().top +
+            field.clientTop +
+            window.pageYOffset +
+            field.clientHeight -
+            ballSize / 2,
+        };
+        let newCoords = { x: 0, y: 0 };
+
+        if (destCoord.x < fieldCoords.minX) {
+          newCoords.x = fieldCoords.minX - ballSize / 2;
+        } else if (destCoord.x > fieldCoords.maxX) {
+          newCoords.x = fieldCoords.maxX - ballSize / 2;
+        } else {
+          newCoords.x = destCoord.x - ballSize / 2;
+        }
+
+        if (destCoord.y < fieldCoords.minY) {
+          newCoords.y = fieldCoords.minY - ballSize / 2;
+        } else if (destCoord.y > fieldCoords.maxY) {
+          newCoords.y = fieldCoords.maxY - ballSize / 2;
+        } else {
+          newCoords.y = destCoord.y - ballSize / 2;
+        }
+        ball.style.top = newCoords.y + "px";
+        ball.style.left = newCoords.x + "px";
+      }
+      field.addEventListener("click", moveBall);
+    </script>
+  </body>
+</html>

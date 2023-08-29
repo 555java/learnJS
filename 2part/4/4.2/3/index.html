@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      #mouse {
+        display: inline-block;
+        cursor: pointer;
+        margin: 0;
+      }
+
+      #mouse:focus {
+        outline: 1px dashed black;
+      }
+    </style>
+  </head>
+
+  <body>
+    <p>
+      Кликните по "изображению" мыши и перемещайте её с помощью клавиш со
+      стрелками.
+    </p>
+    <div>
+      <pre id="mouse">
+ _   _
+(q\_/p)
+ /. .\
+=\_t_/=   __
+ /   \   (
+((   ))   )
+/\) (/\  /
+\  Y  /-'
+ nn^nn
+</pre
+      >
+    </div>
+
+    <script>
+      let mouse = document.getElementById("mouse");
+      mouse.setAttribute("tabindex", "0");
+      mouse.style.position = "absolute";
+
+      mouse.onkeydown = function (event) {
+        let top = this.getBoundingClientRect().top + window.pageYOffset;
+        let left = this.getBoundingClientRect().left + window.pageXOffset;
+        let width = this.getBoundingClientRect().width;
+        let height = this.getBoundingClientRect().height;
+        switch (event.code) {
+          case "ArrowUp":
+            this.style.top = Math.max(top - 10, 0) + "px";
+            break;
+          case "ArrowDown":
+            this.style.top =
+              Math.min(
+                top + 10,
+                document.documentElement.clientHeight - width
+              ) + "px";
+            break;
+          case "ArrowLeft":
+            this.style.left = Math.max(left - 10, 0) + "px";
+            break;
+          case "ArrowRight":
+            this.style.left =
+              Math.min(
+                left + 10,
+                document.documentElement.clientWidth - width
+              ) + "px";
+            break;
+          default:
+            break;
+        }
+      };
+    </script>
+  </body>
+</html>

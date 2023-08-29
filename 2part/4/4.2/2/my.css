@@ -1,0 +1,16 @@
+.cell-area {
+  border: 0px;
+  padding: 0px 0px;
+  margin: 0px 0px;
+  background-color: pink;
+  display: block;
+  outline: none;
+  resize: none;
+}
+td.edited {
+  padding: 0px;
+  margin: 0px;
+}
+.button-container {
+  position: absolute;
+}

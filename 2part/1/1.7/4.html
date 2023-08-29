@@ -1,0 +1,12 @@
+<ul></ul>
+<script>
+  let list = document.querySelector("ul");
+  let isNextLiExist = true;
+  do {
+    let liText = prompt("insert text");
+    if (!liText) break;
+    let nextLi = document.createElement("li");
+    nextLi.prepend(liText);
+    list.append(nextLi);
+  } while (isNextLiExist);
+</script>
